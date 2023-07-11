@@ -1,7 +1,7 @@
 import "@styles/globals.css"
 import Nav from '@components/Nav'
 import Provider from '@components/Provider'
-// import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "next-themes";
 
 
 export const metadata = {
@@ -13,8 +13,8 @@ const RootLayout = ({children}) => {
   return (
     <html lang="en">
        <body>
-      {/* <ThemeProvider attribute="class"> */}
         <Provider>
+      <ThemeProvider attribute="class">
           <div className="main">
               <div className="gradient" />
           </div>
@@ -22,8 +22,8 @@ const RootLayout = ({children}) => {
             <Nav />
             {children}
           </main>
+       </ThemeProvider>
           </Provider>
-       {/* </ThemeProvider> */}
        </body>
     </html>
   )
