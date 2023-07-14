@@ -1,10 +1,11 @@
 import Image from "next/image";
+ import loader from "@public/assets/icons/loader.svg";
 
-export const loader = ()=>{
+const Loading = ()=>{
     return(
         <div className="w-full flex-center">
             <Image 
-             src="assets/icons/loader.svg"
+             src={loader}
              width={50}
              height={50}
              alt="loader"
@@ -13,3 +14,5 @@ export const loader = ()=>{
         </div>
     )
 }
+
+export default Loading;

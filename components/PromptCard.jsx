@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
 
 const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
 
@@ -21,15 +20,25 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
              setCopied('')
             }, 3000)
       }
-  
+
+      const handleProfileClicked = () =>{
+        console.log(prompt)
+
+        if(prompt.creator._id === session?.user.id) {
+          return router.push('/profile')
+      }else{
+        router.push(`/profile/${prompt.creator._id}?name=${prompt.creator.username}`)
+      }
+    };
+
   return (
     <div className='prompt_card'>
        <div className='flex justify-between items-start gap-5'>
-           <div className='flex-1 flex justify-start items-center gap-3 cursor-pointer'>
+           <div className='flex-1 flex justify-start items-center gap-3 cursor-pointer'
+           onClick={handleProfileClicked}
+           >
              {/* {console.log(prompt)} */}
-             <a
-              href={`/profile`}
-             >
+             
               <Image 
                 src={prompt.creator?.image}
                 alt='user_image'
@@ -37,7 +46,7 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
                 height={40}
                 className='rounded-full object-contain'
               />
-             </a>
+             
 
               <div className='flex flex-col'>
                 <h3 className='font-semibold font-satoshi text-gray-900 dark:text-white'>{prompt.creator?.username}</h3>
@@ -56,13 +65,12 @@ const PromptCard = ({prompt, handleTagClick, handleEdit, handleDelete}) => {
        </div>
          <p className='mt-4 mb-2 font-satoshi text-md text-gray-700 dark:text-white'>{prompt.prompt}
          </p>
-         {/* <Link href="/profile" className='text-blue-700'>See more</Link>
+         {/* <Link href="/profile" className='text-blue-700'>See more</Link> */}
          <p className='font-inter my-2 text-sm orange_gradient cursor-pointer'
           onClick={() => handleTagClick && handleTagClick(prompt.tag)}>
-
           {prompt.tag}
 
-         </p> */}
+         </p>
 
          {session?.user.id === prompt.creator._id && pathName === '/profile' && (
             <div className='mt-5 flex-center gap-5 justify-evenly border-t border-gray-100 pt-3'> 
